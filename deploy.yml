@@ -1,0 +1,24 @@
+- name: Deploy docker-manage-windows
+  hosts: all
+  remote_user: root
+  tasks:
+      - set_fact:
+          compose_dir: /var/tmp/ansible-docker-container
+          compose_def: manage-windows
+
+      - name: "DEPLOY | Creating Compose dir"
+        file:
+            path: "{{ compose_dir  }}"
+            state: directory
+
+      - name: "DEPLOY | Uploading docker-compose files"
+        synchronize:
+            src: ./
+            dest: "{{ compose_dir }}/{{ compose_def }}"
+            rsync_opts: --exclude=.git --exclude=build.* --exclude=.vagrant --exclude=Vagrantfile --exclude=tests 
+            copy_links: yes
+
+      - name: "DEPLOY | Orchestrating Container"
+        make:
+            chdir: "{{ compose_dir }}/{{ compose_def }}"
+            target: all
