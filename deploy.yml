@@ -3,22 +3,36 @@
   remote_user: root
   tasks:
       - set_fact:
-          compose_dir: /var/tmp/ansible-docker-container
-          compose_def: manage-windows
+          container_home: /var/lib/pylonlabs/manage-windows
 
-      - name: "DEPLOY | Creating Compose dir"
+      - name: "DEPLOY | Creating Playbook Folder"
         file:
-            path: "{{ compose_dir  }}"
+            path: "{{ container_home  }}"
             state: directory
 
-      - name: "DEPLOY | Uploading docker-compose files"
+      - name: "DEPLOY | Uploading Playbook"
         synchronize:
-            src: ./
-            dest: "{{ compose_dir }}/{{ compose_def }}"
+            src: ./playbook
+            dest: "{{ container_home }}/playbook"
             rsync_opts: --exclude=.git --exclude=build.* --exclude=.vagrant --exclude=Vagrantfile --exclude=tests 
             copy_links: yes
 
       - name: "DEPLOY | Orchestrating Container"
-        make:
-            chdir: "{{ compose_dir }}/{{ compose_def }}"
-            target: all
+        docker_service:
+          pull: yes
+          project_name: "manage-windows"
+          definition:
+            version: '2'
+            services:
+              manage:
+                image: alinmear/docker-manage-windows:latest
+                volumes:
+                  - /var/lib/pylonlabs/manage-windows/playbook:/opt/manage-windows
+                dns:
+                  - 8.8.8.8
+                dns_search:
+                  - example.com
+                environment:
+                  - MANAGEWINDOWS_DOMAIN=example.com
+                  - MANAGEWINDOWS_CRON='0 0 * * *'
+                  - MANAGEWINDOWS_KDC='kdc'
