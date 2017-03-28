@@ -21,6 +21,8 @@ services:
       - example.com
     environment:
       - MANAGEWINDOWS_DOMAIN=example.com
+      - MANAGEWINDOWS_USER=administrator
+      - MANAGEWINDOWS_PASS=mypass
       - MANAGEWINDOWS_CRON='0 0 * * *'
       - MANAGEWINDOWS_KDC='kdc'
 ```
@@ -40,6 +42,14 @@ ansible-playbook deploy.yml -i '<host>,'
 ##### MANAGEWINDOWS_DOMAIN
 
   - Specify the Domain. The script will use this value to create a valid `/etc/krb5.conf`
+
+##### MANAGEWINDOWS_USER
+
+  - Specify the User for Kerberos TGT
+
+##### MANAGEWINDOWS_PASS
+
+  - Specify the Pass for Kerberos TGT
 
 ##### MANAGEWINDOWS_KDC
 

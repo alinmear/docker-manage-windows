@@ -6,6 +6,8 @@
     DNS: '8.8.8.8'
     DNS_SEARCH: 'test.loc'
     DOMAIN: 'test.loc'
+    USER: 'administrator'
+    PASS: 'mypass'
     KDC: 'kdc'
     CRON: '0 0 * * *'
 
@@ -43,5 +45,7 @@
                   - "{{ DNS_SEARCH }}"
                 environment:
                   - "MANAGEWINDOWS_DOMAIN={{ DOMAIN }}"
+                  - "MANAGEWINDOWS_USER={{ USER }}"
+                  - "MANAGEWINDOWS_PASS={{ PASS }}"
                   - "MANAGEWINDOWS_KDC={{ KDC }}"
                   - "MANAGEWINDOWS_CRON={{ CRON }}"

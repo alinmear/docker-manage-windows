@@ -1,9 +1,5 @@
 #!/bin/bash
 
-_playbook_root="/opt/manage-windows"
-_playbook="${_playbook_root}/site.yml"
-_inventory="${_playbook_root}/production"
-
 remove_quotes() {
     expr="$1"
     expr="${expr%\'}"
@@ -21,8 +17,8 @@ setup_krb5() {
 
 setup_krb5
 
-crontab -l | grep -E "ansible-playbook|\/opt\/manager-windows\/site\.yml"
-[[ $? == 1 ]] && (crontab -l 2>/dev/null; echo "$(remove_quotes "$MANAGEWINDOWS_CRON") ansible-playbook ${_playbook} -i ${_inventory} 2>&1") | crontab -
+crontab -l | grep -E "execute_playbook"
+[[ $? == 1 ]] && (crontab -l 2>/dev/null; echo "$(remove_quotes "$MANAGEWINDOWS_CRON") execute_playbook 2>&1") | crontab -
 
 # startup supervisord from Docker cmd
 "$@"
