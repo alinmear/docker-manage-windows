@@ -28,6 +28,7 @@
       - name: "DEPLOY | Orchestrating Container"
         docker_service:
           state: present
+          pull: yes
           project_name: "manage-windows"
           definition:
             version: '2'
