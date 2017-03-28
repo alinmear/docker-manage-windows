@@ -1,0 +1,7 @@
+[windows]
+host1
+host2
+hostn
+
+[windows:vars]
+SOMEVAR=TEST

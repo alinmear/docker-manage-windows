@@ -1,0 +1,5 @@
+---
+- name: Provision Windows hosts
+  hosts: windows
+  roles:
+    - manage-windows
