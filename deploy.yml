@@ -1,6 +1,14 @@
 - name: Deploy docker-manage-windows
   hosts: all
   remote_user: root
+
+  vars:
+    DNS: '8.8.8.8'
+    DNS_SEARCH: 'test.loc'
+    DOMAIN: 'test.loc'
+    KDC: 'kdc'
+    CRON: '0 0 * * *'
+
   tasks:
       - set_fact:
           container_home: /var/lib/pylonlabs/manage-windows
@@ -12,14 +20,14 @@
 
       - name: "DEPLOY | Uploading Playbook"
         synchronize:
-            src: ./playbook
+            src: ./playbook/
             dest: "{{ container_home }}/playbook"
             rsync_opts: --exclude=.git --exclude=build.* --exclude=.vagrant --exclude=Vagrantfile --exclude=tests 
             copy_links: yes
 
       - name: "DEPLOY | Orchestrating Container"
         docker_service:
-          pull: yes
+          state: present
           project_name: "manage-windows"
           definition:
             version: '2'
@@ -29,10 +37,10 @@
                 volumes:
                   - "{{ container_home }}/playbook:/opt/manage-windows"
                 dns:
-                  - 8.8.8.8
+                  - "{{ DNS }}"
                 dns_search:
-                  - example.com
+                  - "{{ DNS_SEARCH }}"
                 environment:
-                  - MANAGEWINDOWS_DOMAIN=example.com
-                  - MANAGEWINDOWS_CRON='0 0 * * *'
-                  - MANAGEWINDOWS_KDC='kdc'
+                  - "MANAGEWINDOWS_DOMAIN={{ DOMAIN }}"
+                  - "MANAGEWINDOWS_KDC={{ KDC }}"
+                  - "MANAGEWINDOWS_CRON={{ CRON }}"

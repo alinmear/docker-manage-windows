@@ -25,6 +25,16 @@ services:
       - MANAGEWINDOWS_KDC='kdc'
 ```
 
+## Deploy to remote docker host
+
+For this use the deploy playbook.
+
+**NOTE**: Edit deploy.yml first, to set the domain infos at the vars section.
+
+```bash
+ansible-playbook deploy -i '<host>,'
+```
+
 ## Environment Variables
 
 ##### MANAGEWINDOWS_DOMAIN
