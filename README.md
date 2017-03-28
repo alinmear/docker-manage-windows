@@ -32,7 +32,7 @@ For this use the deploy playbook.
 **NOTE**: Edit deploy.yml first, to set the domain infos at the vars section.
 
 ```bash
-ansible-playbook deploy -i '<host>,'
+ansible-playbook deploy.yml -i '<host>,'
 ```
 
 ## Environment Variables
