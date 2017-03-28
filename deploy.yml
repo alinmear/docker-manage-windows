@@ -27,7 +27,7 @@
               manage:
                 image: alinmear/docker-manage-windows:latest
                 volumes:
-                  - /var/lib/pylonlabs/manage-windows/playbook:/opt/manage-windows
+                  - "{{ container_home }}/playbook:/opt/manage-windows"
                 dns:
                   - 8.8.8.8
                 dns_search:
