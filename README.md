@@ -27,7 +27,7 @@ services:
 
 ## Environment Variables
 
-###### MANAGEWINDOWS_DOMAIN
+##### MANAGEWINDOWS_DOMAIN
 
   - Specify the Domain. The script will use this value to create a valid `/etc/krb5.conf`
 
