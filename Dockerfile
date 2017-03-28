@@ -7,13 +7,12 @@ ENV TIMEZONE=Europe/Vienna MANAGEWINDOWS_CRON='0 3 * * *' \
 
 RUN apk --update add bash supervisor python py-pip openssl ca-certificates krb5 krb5-libs && \
     apk --update add --virtual build-dependencies \
-    python-dev libffi-dev openssl-dev build-base \
+    python-dev libffi-dev openssl-dev build-base tzdata \
     krb5-dev && \
     pip install --upgrade pip cffi && \
     pip install ansible==2.2.2 pywinrm[kerberos] && \
+    cp /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE > /etc/timezone && \
     apk del build-dependencies && rm -rf /var/cache/apk/*
-
-RUN ln -snf /usr/share/zoneinfo/Europe/Vienna /etc/localtime && echo $TIMEZONE > /etc/timezone
 
 COPY files/entrypoint.sh /entrypoint.sh
 COPY files/supervisord.conf /etc/supervisord.conf
