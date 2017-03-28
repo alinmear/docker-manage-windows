@@ -4,7 +4,7 @@ An ansible management container for windows infrastructure.
 
 ## Create a `docker-compose.yml`
 
-**NOTE**: the volumes mount should contain the playbook to be executed. The playbook must have a `site.yml` as starting point and a inventory file `production`.
+**NOTE**: the volumes mount should contain the playbook to be executed. The playbook must have a `site.yml` as starting point and an inventory file `production`. For more informations about ansible and windows take a look at http://docs.ansible.com/ansible/intro_windows.html .
 
 ```yaml
 version: '2'
