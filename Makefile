@@ -1,4 +1,4 @@
-NAME = alinmear/docker-manage-windows:latest
+NAME = alinmear/docker-manage-windows:testing
 
 all: no-cache
 all-cache: cache
